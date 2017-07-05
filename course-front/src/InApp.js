@@ -25,9 +25,8 @@ class InApp extends Component {
   }
 
   render() {
-    console.log('kendo jaa', this.state.page)
     return (
-      <div className='in-app'>
+      <div style={{ textAlign: 'center' }}>
         <Header onChangeMenu={this.onChangeMenu} />
         {this.renderPage()}
       </div>
