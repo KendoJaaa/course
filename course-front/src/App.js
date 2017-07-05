@@ -7,11 +7,11 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      login: false
+      login: true
     }
   }
 
-  render() {
+  render () {
     return (
       <div className="App">
         {this.state.login

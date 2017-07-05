@@ -12,6 +12,10 @@ class InApp extends Component {
     }
   }
 
+  onChangeMenu = (menu) => {
+    this.setState({ page: menu })
+  }
+
   renderPage = () => {
     if (this.state.page === 'course') {
       return <CoursePage />
@@ -21,9 +25,10 @@ class InApp extends Component {
   }
 
   render() {
+    console.log('kendo jaa', this.state.page)
     return (
-      <div className="App">
-        <Header />
+      <div className='in-app'>
+        <Header onChangeMenu={this.onChangeMenu} />
         {this.renderPage()}
       </div>
     );

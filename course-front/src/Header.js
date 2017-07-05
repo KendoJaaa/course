@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Navbar, NavItem, Nav,  } from 'react-bootstrap'
+import PropTypes from 'prop-types'
 
-class LoginForm extends Component {
+class Header extends Component {
+
+  static propTypes = {
+    onChangeMenu: PropTypes.func
+  }
+
   render() {
     return (
       <Navbar inverse collapseOnSelect>
@@ -13,10 +19,22 @@ class LoginForm extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem eventKey={1} href="#">Course</NavItem>
+            <NavItem
+              onSelect={() => this.props.onChangeMenu('course')}
+              eventKey={1}
+              href="#"
+            >
+              Course
+            </NavItem>
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={1} href="#">Edit Profile</NavItem>
+            <NavItem
+              onSelect={() => this.props.onChangeMenu('edit-profile')}
+              eventKey={1}
+              href="#"
+            >
+              Edit Profile
+            </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -24,4 +42,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default Header
