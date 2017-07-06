@@ -22,7 +22,6 @@ class Header extends Component {
             <NavItem
               onSelect={() => this.props.onChangeMenu('course')}
               eventKey={1}
-              href="#"
             >
               Course
             </NavItem>
@@ -31,7 +30,6 @@ class Header extends Component {
             <NavItem
               onSelect={() => this.props.onChangeMenu('edit-profile')}
               eventKey={1}
-              href="#"
             >
               Edit Profile
             </NavItem>

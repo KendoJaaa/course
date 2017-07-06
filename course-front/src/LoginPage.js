@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label,
+import { Button, Form, FormGroup,
   Col, FormControl, ControlLabel } from 'react-bootstrap'
 import './LoginPage.css'
 
