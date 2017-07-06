@@ -4,6 +4,30 @@ import EditProfilePage from './EditProfilePage.js'
 import CoursePage from './CoursePage.js'
 import './InApp.css'
 
+const coursesMock = [
+  { name: 'a2202',
+    description: 'ddddd',
+    category: 'thai',
+    subject: 'This is a book',
+    time: '5 am to 6pm',
+    numberOfStudent: '5'
+  },
+  { name: 'a2202',
+    description: 'ddddd',
+    category: 'thai',
+    subject: 'This is a book',
+    time: '5 am to 6pm',
+    numberOfStudent: '5'
+  },
+  { name: 'a2202',
+    description: 'ddddd',
+    category: 'thai',
+    subject: 'This is a book',
+    time: '5 am to 6pm',
+    numberOfStudent: '5'
+  },
+]
+
 class InApp extends Component {
   constructor (props) {
     super(props)
@@ -18,7 +42,7 @@ class InApp extends Component {
 
   renderPage = () => {
     if (this.state.page === 'course') {
-      return <CoursePage />
+      return <CoursePage courses={coursesMock}/>
     } else if (this.state.page === 'edit-profile') {
       return <EditProfilePage />
     }
@@ -28,7 +52,9 @@ class InApp extends Component {
     return (
       <div style={{ textAlign: 'center' }}>
         <Header onChangeMenu={this.onChangeMenu} />
-        {this.renderPage()}
+        <div style={{ margin: '50px 100px' }}>
+          {this.renderPage()}
+        </div>
       </div>
     );
   }
