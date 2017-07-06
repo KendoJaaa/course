@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, Col, FormControl, ControlLabel } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
-const labels = [ 'First name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ]
-
 class TextForm extends Component {
 
   static propTypes = {
@@ -15,7 +13,7 @@ class TextForm extends Component {
 
   renderFormRow = (label) => {
     return (
-      <FormGroup controlId="formHorizontalEmail">
+      <FormGroup controlId="formHorizontalEmail" key={label}>
         <Col componentClass={ControlLabel} sm={2}>
           {label}
         </Col>
@@ -33,11 +31,11 @@ class TextForm extends Component {
         style={{ width: '600px', margin: 'auto' }}
       >
         <Form horizontal>
-          {labels.map((label) => this.renderFormRow(label))}
+          {this.props.labels.map((label) => this.renderFormRow(label))}
         </Form>
-        <div style={{ 'display':'flex', 'justify-content':'center' }}>
+        <div style={{ 'display':'flex', 'justifyContent':'center' }}>
           <Button onClick={this.props.onSubmit} type="submit">
-            Update
+            {this.props.buttonLabel}
           </Button>
         </div>
       </div>

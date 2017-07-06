@@ -7,8 +7,12 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      login: true
+      login: false
     }
+  }
+
+  onLogin = (email, password) => {
+    console.log('kendo jaa', email, password)
   }
 
   render () {
@@ -16,7 +20,7 @@ class App extends Component {
       <div className="App">
         {this.state.login
           ? <InApp />
-          : <LoginPage />
+          : <LoginPage onLogin={this.onLogin} />
         }
       </div>
     );

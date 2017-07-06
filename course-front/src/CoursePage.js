@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { Table } from 'react-bootstrap'
+import { Table, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 
 class CoursePage extends Component {
   static propTypes = {
+    onGotoCreatePage: PropTypes.func,
     courses: PropTypes.array
   }
 
   renderCourse = (course) => {
-    return  <tr>
+    return  <tr key={course.name}>
       <td>{course.name}</td>
       <td>{course.description}</td>
       <td>{course.category}</td>
@@ -21,6 +22,10 @@ class CoursePage extends Component {
   render() {
     return (
       <div className='course-page'>
+        <Button
+          style={{ margin: '20px 0', float: 'right' }}
+          onClick={this.props.onGotoCreatePage}
+        >Create Course</Button>
         <Table striped bordered condensed hover>
           <thead>
             <tr>

@@ -3,7 +3,14 @@ import { Button, Form, FormGroup,
   Col, FormControl, ControlLabel } from 'react-bootstrap'
 import './LoginPage.css'
 
+import PropTypes from 'prop-types'
+
 class LoginPage extends Component {
+
+  static propTypes = {
+    onLogin: PropTypes.func.isRequired
+  }
+
   render() {
     return (
       <div className='login-page'>
@@ -15,7 +22,11 @@ class LoginPage extends Component {
                 Email
               </Col>
               <Col sm={10}>
-                <FormControl type="email" placeholder="Email" />
+                <FormControl
+                  inputRef={ref => { this.email = ref }}
+                  type="email"
+                  placeholder="Email"
+                />
               </Col>
             </FormGroup>
 
@@ -24,11 +35,18 @@ class LoginPage extends Component {
                 Password
               </Col>
               <Col sm={10}>
-                <FormControl type="password" placeholder="Password" />
+                <FormControl
+                  inputRef={ref => { this.password = ref }}
+                  type="password"
+                  placeholder="Password"
+                />
               </Col>
             </FormGroup>
-            <div style={{ 'display':'flex', 'justify-content':'center' }}>
-              <Button type="submit">
+            <div style={{ 'display':'flex', 'justifyContent':'center' }}>
+              <Button
+                onClick={() => this.props.onLogin(this.email.value, this.password.value)}
+                type="submit"
+              >
                 Log in
               </Button>
             </div>
