@@ -12,19 +12,22 @@ class App extends Component {
     }
   }
 
-  onLogin = (email, password) => {
+  componentDidMount = () => {
+    console.log('kendo did mount again')
+  }
 
-    var instance = axios.create({
+  onLogin = (email, password) => {
+    const instance = axios.create({
       baseURL: 'http://localhost:8080/',
       timeout: 1000,
       headers: {'content-Type': 'application/json'},
     });
     instance.post('/login', JSON.stringify({ email ,password }))
-      .then(function (response) {
-        console.log('kendo jaa 555', response.data, response.data === 'login success', typeof response.data)
+      .then((response) => {
         if (response.data === 'login success') {
-          console.log('===== login success ======')
+          console.log('===== login success before======')
           this.setState({ login: true })
+          console.log('===== login success after======')
         } else {
           console.log('===== login failed ======')
         }
@@ -46,4 +49,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

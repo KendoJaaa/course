@@ -45,7 +45,6 @@ class LoginPage extends Component {
             <div style={{ 'display':'flex', 'justifyContent':'center' }}>
               <Button
                 onClick={() => this.props.onLogin(this.email.value, this.password.value)}
-                type="submit"
               >
                 Log in
               </Button>
