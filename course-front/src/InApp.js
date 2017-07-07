@@ -3,6 +3,7 @@ import Header from './Header.js'
 import EditProfilePage from './EditProfilePage.js'
 import CreateCoursePage from './CreateCoursePage.js'
 import CoursePage from './CoursePage.js'
+import PropTypes from 'prop-types'
 import './InApp.css'
 
 const coursesMock = [
@@ -30,6 +31,11 @@ const coursesMock = [
 ]
 
 class InApp extends Component {
+
+  static propTypes = {
+    role: PropTypes.string.isRequired
+  }
+
   constructor (props) {
     super(props)
     this.state = {
@@ -44,7 +50,7 @@ class InApp extends Component {
   renderPage = () => {
     if (this.state.page === 'course') {
       return <CoursePage
-        onGotoCreatePage={() => this.onChangeMenu('create-course')}
+        onGotoCreatePage={this.props.role === 'teacher' && (() => this.onChangeMenu('create-course'))}
         courses={coursesMock}
       />
     } else if (this.state.page === 'create-course') {

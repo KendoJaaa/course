@@ -8,7 +8,8 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      login: false
+      login: false,
+      role: ''
     }
   }
 
@@ -24,10 +25,18 @@ class App extends Component {
     });
     instance.post('/login', JSON.stringify({ email ,password }))
       .then((response) => {
-        if (response.data === 'login success') {
-          console.log('===== login success before======')
-          this.setState({ login: true })
-          console.log('===== login success after======')
+        if (response.data === 'login success teacher') {
+          console.log('===== login success teacher ======')
+          this.setState({
+            login: true,
+            role: 'teacher'
+          })
+        } else if (response.data === 'login success student') {
+          console.log('===== login success student ======')
+          this.setState({
+            login: true,
+            role: 'student'
+          })
         } else {
           console.log('===== login failed ======')
         }
@@ -41,7 +50,7 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.login
-          ? <InApp />
+          ? <InApp role={this.state.role}/>
           : <LoginPage onLogin={this.onLogin} />
         }
       </div>

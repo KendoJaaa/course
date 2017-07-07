@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 class CoursePage extends Component {
   static propTypes = {
-    onGotoCreatePage: PropTypes.func,
+    onGotoCreatePage: PropTypes.any,
     courses: PropTypes.array
   }
 
@@ -22,10 +22,13 @@ class CoursePage extends Component {
   render() {
     return (
       <div className='course-page'>
-        <Button
+        {this.props.onGotoCreatePage && <Button
           style={{ margin: '20px 0', float: 'right' }}
           onClick={this.props.onGotoCreatePage}
-        >Create Course</Button>
+          >
+            Create Course
+          </Button>
+        }
         <Table striped bordered condensed hover>
           <thead>
             <tr>

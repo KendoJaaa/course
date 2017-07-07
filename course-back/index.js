@@ -50,10 +50,12 @@ const loginHandler = (payload, res) => {
       console.log('kendo jaa result',result)
       if (result && result.password === password) {
         console.log('======== login success ========')
-        res.write('login success')
-        console.log('kendo jaa omg fuck')
+        if (result.role === 'teacher') {
+          res.write('login success teacher')
+        } else {
+          res.write('login success student')
+        }
         res.end()
-        console.log('kendo jaa omg')
       } else {
         console.log('kendo jaa herherhehrehrehrhehrehrherhehrehrherh')
         res.write('login fail')
