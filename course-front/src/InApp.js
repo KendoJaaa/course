@@ -6,34 +6,11 @@ import CoursePage from './CoursePage.js'
 import PropTypes from 'prop-types'
 import './InApp.css'
 
-const coursesMock = [
-  { name: 'a2202',
-    description: 'ddddd',
-    category: 'thai',
-    subject: 'This is a book',
-    time: '5 am to 6pm',
-    numberOfStudent: '5'
-  },
-  { name: 'a2201',
-    description: 'ddddd',
-    category: 'thai',
-    subject: 'This is a book',
-    time: '5 am to 6pm',
-    numberOfStudent: '5'
-  },
-  { name: 'a2200',
-    description: 'ddddd',
-    category: 'thai',
-    subject: 'This is a book',
-    time: '5 am to 6pm',
-    numberOfStudent: '5'
-  },
-]
-
 class InApp extends Component {
 
   static propTypes = {
-    role: PropTypes.string.isRequired
+    user: PropTypes.object.isRequired,
+    courses: PropTypes.array.isRequired
   }
 
   constructor (props) {
@@ -51,12 +28,12 @@ class InApp extends Component {
     if (this.state.page === 'course') {
       return <CoursePage
         onGotoCreatePage={this.props.role === 'teacher' && (() => this.onChangeMenu('create-course'))}
-        courses={coursesMock}
+        courses={this.props.courses}
       />
     } else if (this.state.page === 'create-course') {
       return <CreateCoursePage />
     } else if (this.state.page === 'edit-profile') {
-      return <EditProfilePage />
+      return <EditProfilePage user={this.props.user}/>
     }
   }
 

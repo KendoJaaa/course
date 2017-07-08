@@ -8,13 +8,22 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      login: false,
+      user: null,
+      courses: [],
       role: ''
     }
   }
 
   componentDidMount = () => {
     console.log('kendo did mount again')
+  }
+
+  onUpdateUser = (user) => {
+    this.setState({ user })
+  }
+
+  onOnAddCourse = (course) => {
+    this.setState({ courses: [ ...this.state.courses, course ]})
   }
 
   onLogin = (email, password) => {
@@ -49,8 +58,8 @@ class App extends Component {
   render () {
     return (
       <div className="App">
-        {this.state.login
-          ? <InApp role={this.state.role}/>
+        {this.state.user
+          ? <InApp user={this.state.user}/>
           : <LoginPage onLogin={this.onLogin} />
         }
       </div>
