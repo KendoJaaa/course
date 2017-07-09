@@ -1,15 +1,29 @@
-import React, { Component } from 'react';
-import LoginPage from './LoginPage.js'
-import InApp from './InApp.js'
-import axios from 'axios'
+
 import './App.css'
+
+import React, { Component } from 'react'
+import axios from 'axios'
+
+// navigation
+import Header from './Header.js'
+
+// All Pages
+import LoginPage from './LoginPage.js'
+import CoursePage from './CoursePage.js'
+import EditProfilePage from './EditProfilePage.js'
+import CreateCoursePage from './CreateCoursePage.js'
+
+// Routing
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import PrivateRoute from './PrivateRoute.js'
+
+
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      user: null,
-      courses: [],
+      login: false,
       role: ''
     }
   }
@@ -56,13 +70,21 @@ class App extends Component {
   }
 
   render () {
+    const courses = [{ name: 'fuck', description: 'ja', category: 'her', subject: 'suck', startEndTime: 'kak', numberOfStudent: '20'}]
     return (
-      <div className="App">
-        {this.state.user
-          ? <InApp user={this.state.user}/>
-          : <LoginPage onLogin={this.onLogin} />
-        }
-      </div>
+      <Router>
+        <div>
+          <Header />
+          <Route
+            path='/login'
+            render={(props) => <LoginPage onLogin={this.onLogin} login={this.state.login} {...props} />}
+          />
+          <PrivateRoute path='/' exact render={() => (<CoursePage courses={courses} />)} login={this.state.login} />
+          <PrivateRoute path='/course' render={() => (<CoursePage courses={courses} />)} login={this.state.login} />
+          <PrivateRoute path='/edit-profile' component={EditProfilePage} login={this.state.login} />
+          <PrivateRoute path='/create-course' component={CreateCoursePage} login={this.state.login} />
+        </div>
+      </Router>
     );
   }
 }

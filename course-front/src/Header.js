@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import { Navbar, NavItem, Nav,  } from 'react-bootstrap'
+import { Navbar, NavItem, Nav } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class Header extends Component {
-
-  static propTypes = {
-    onChangeMenu: PropTypes.func
-  }
-
   render() {
     return (
       <Navbar inverse collapseOnSelect>
@@ -18,25 +14,19 @@ class Header extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav>
-            <NavItem
-              onSelect={() => this.props.onChangeMenu('course')}
-              eventKey={1}
-            >
+          <Link to='/course'>
+            <Nav>
               Course
-            </NavItem>
-          </Nav>
-          <Nav pullRight>
-            <NavItem
-              onSelect={() => this.props.onChangeMenu('edit-profile')}
-              eventKey={1}
-            >
+            </Nav>
+          </Link>
+          <Link to='/edit-profile'>
+            <Nav pullRight>
               Edit Profile
-            </NavItem>
-          </Nav>
+            </Nav>
+          </Link>
         </Navbar.Collapse>
       </Navbar>
-    );
+    )
   }
 }
 

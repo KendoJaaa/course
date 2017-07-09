@@ -1,17 +1,44 @@
-import React, { Component } from 'react';
-import { Button, Form, FormGroup,
-  Col, FormControl, ControlLabel } from 'react-bootstrap'
+
 import './LoginPage.css'
 
+import React, { Component } from 'react';
 import PropTypes from 'prop-types'
+import { Button, Form, FormGroup,
+  Col, FormControl, ControlLabel } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
+
 
 class LoginPage extends Component {
 
   static propTypes = {
-    onLogin: PropTypes.func.isRequired
+    onLogin: PropTypes.func.isRequired,
+    login: PropTypes.bool.isRequired
   }
 
-  render() {
+  constructor (props) {
+    super(props)
+    this.state = {
+      redirectToReferrer: false
+    }
+  }
+
+  componentWillUpdate = (nextProps) => {
+    if (!this.props.login && nextProps.login) {
+      this.setState({ redirectToReferrer: true })
+    }
+  }
+
+  render () {
+
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { redirectToReferrer } = this.state
+
+    if (redirectToReferrer) {
+      return (
+        <Redirect to={from}/>
+      )
+    }
+
     return (
       <div className='login-page'>
         <h1>ABC School</h1>
