@@ -11,14 +11,24 @@ class TextForm extends Component {
     onSubmit: PropTypes.func,
   }
 
-  renderFormRow = (label) => {
+  componentDidMount = () => {
+    this.props.values.map((value, index) => {
+      this[index].value = value
+    })
+  }
+
+  constructor(props) {
+    super(props)
+  }
+
+  renderFormRow = (label, index) => {
     return (
       <FormGroup controlId="formHorizontalEmail" key={label}>
         <Col componentClass={ControlLabel} sm={2}>
           {label}
         </Col>
         <Col sm={10}>
-          <FormControl type="email" placeholder="Email" />
+          <FormControl inputRef={ref => { this[index] = ref }}/>
         </Col>
       </FormGroup>
     )
@@ -31,7 +41,7 @@ class TextForm extends Component {
         style={{ width: '600px', margin: 'auto' }}
       >
         <Form horizontal>
-          {this.props.labels.map((label) => this.renderFormRow(label))}
+          {this.props.labels.map((label, index) => this.renderFormRow(label, index))}
         </Form>
         <div style={{ 'display':'flex', 'justifyContent':'center' }}>
           <Button onClick={this.props.onSubmit} type="submit">
