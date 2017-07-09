@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavItem, Nav } from 'react-bootstrap'
+import { Navbar, NavItem, Nav, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
@@ -20,10 +20,15 @@ class Header extends Component {
             </Nav>
           </Link>
           <Link to='/edit-profile'>
-            <Nav pullRight>
+            <Nav>
               Edit Profile
             </Nav>
           </Link>
+          <Button onClick={this.props.onLogOut}>
+            <Nav pullRight>
+              Logout
+            </Nav>
+          </Button>
         </Navbar.Collapse>
       </Navbar>
     )

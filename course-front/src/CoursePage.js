@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 class CoursePage extends Component {
   static propTypes = {
-    onGotoCreatePage: PropTypes.any,
+    showCreateButton: PropTypes.bool,
     courses: PropTypes.array
   }
 
@@ -20,11 +20,11 @@ class CoursePage extends Component {
   }
 
   render() {
+    console.log('kendo', this.props.showCreateButton)
     return (
       <div className='course-page'>
-        {this.props.onGotoCreatePage && <Button
+        {this.props.showCreateButton && <Button
           style={{ margin: '20px 0', float: 'right' }}
-          onClick={this.props.onGotoCreatePage}
           >
             Create Course
           </Button>

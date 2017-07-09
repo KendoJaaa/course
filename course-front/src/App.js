@@ -24,6 +24,7 @@ class App extends Component {
     super(props)
     this.state = {
       user: null,
+      courses: [],
     }
   }
 
@@ -42,6 +43,12 @@ class App extends Component {
     this.setState({ courses: [ ...this.state.courses, course ]})
   }
 
+  onLogOut = () => {
+    this.setState({ user: null, courses: [ ] })
+    localStorage.setItem('courseEmail', undefined)
+    localStorage.setItem('courseAccessToken', undefined)
+  }
+
   onLogin = ({ email, password, accessToken }) => {
     const instance = axios.create({
       baseURL: 'http://localhost:8080/',
@@ -58,9 +65,10 @@ class App extends Component {
     instance.post('/login', JSON.stringify(payload))
       .then((response) => {
         if (response.data !== 'login fail') {
-          console.log('===== login successfully ======')
-          const user = response.data
-          this.setState({ user })
+          console.log('===== login successfully ======', response.data)
+          const user = response.data.user
+          const courses = response.data.courses
+          this.setState({ user, courses })
           localStorage.setItem('courseEmail', user.email )
           localStorage.setItem('courseAccessToken', user.access_token)
         } else {
@@ -73,22 +81,28 @@ class App extends Component {
   }
 
   render () {
-    const courses = [{ name: 'fuck', description: 'ja', category: 'her', subject: 'suck', startEndTime: 'kak', numberOfStudent: '20'}]
+    const renderCoursePage = () => (<CoursePage
+        courses={this.state.courses} showCreateButton={this.state.user && this.state.user.role === 'teacher'} />
+    )
     return (
       <Router>
         <div>
-          <Header />
+          <Header onLogOut={this.onLogOut} />
           <Route
             path='/login'
-            render={(props) => <LoginPage onLogin={this.onLogin} login={!!this.state.user} {...props} />}
+            render={(props) => <LoginPage
+              onLogin={this.onLogin}
+              login={!!this.state.user}
+              {...props}
+            />}
           />
-          <PrivateRoute path='/' exact render={() => (<CoursePage courses={courses} />)} login={!!this.state.user} />
-          <PrivateRoute path='/course' render={() => (<CoursePage courses={courses} />)} login={!!this.state.user} />
+          <PrivateRoute path='/' exact render={renderCoursePage} login={!!this.state.user} />
+          <PrivateRoute path='/course' render={renderCoursePage} login={!!this.state.user} />
           <PrivateRoute path='/edit-profile' component={EditProfilePage} login={!!this.state.user} />
           <PrivateRoute path='/create-course' component={CreateCoursePage} login={!!this.state.user} />
         </div>
       </Router>
-    );
+    )
   }
 }
 

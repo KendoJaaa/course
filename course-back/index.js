@@ -14,7 +14,7 @@ http.createServer(function (req, res) {
 
   let payload = ''
   req.on('data', function (data) {
-      payload += data;
+      payload += data
   });
   req.on('end', function () {
     console.log('====== got some request ========', req.method, payload)
@@ -31,7 +31,7 @@ http.createServer(function (req, res) {
       res.write('login fail')
       res.end()
     }
-  });
+  })
 
 }).listen(8080)
 
@@ -41,24 +41,30 @@ const loginHandler = (payload, res) => {
   const email = payload.email
   const password = payload.password
   const accessToken = payload.accessToken
-  console.log('kendo jaa payload', email, password)
   MongoClient.connect(url, function(err, db) {
     console.log('Connected to DB')
     if (err) throw err
-    db.collection("users").findOne({ email }, function(err, result) {
+    db.collection('users').findOne({ email }, function(err, userResult) {
       if (err) throw err
-      db.close();
-      console.log('kendo jaa result',result)
-      if (result && (result.password === password || result.access_token === accessToken)) {
-        console.log('======== login success ========')
-        const payload = JSON.stringify(result)
-        res.write(payload)
-        res.end()
-      } else {
-        console.log('kendo jaa herherhehrehrehrhehrehrherhehrehrherh')
-        res.write('login fail')
-        res.end()
-      }
-    });
-  });
+
+      db.collection('courses').find({}).toArray(function(err, courseResult) {
+        if (err) throw err
+        console.log('kendo jaa', courseResult)
+        db.close()
+        if (userResult && (userResult.password === password || userResult.access_token === accessToken)) {
+          console.log('======== login success ========')
+
+          const payload = {
+            user: userResult,
+            courses: courseResult
+          }
+          res.write(JSON.stringify(payload))
+          res.end()
+        } else {
+          res.write('login fail')
+          res.end()
+        }
+      })
+    })
+  })
 }
