@@ -6,15 +6,17 @@ class TextForm extends Component {
 
   static propTypes = {
     labels: PropTypes.array,
-    values: PropTypes.array,
+    defaultValues: PropTypes.array,
     buttonLabel: PropTypes.string,
     onSubmit: PropTypes.func,
   }
 
   componentDidMount = () => {
-    this.props.values.map((value, index) => {
-      this[index].value = value
-    })
+    if (this.props.defaultValues) {
+      this.props.defaultValues.map((value, index) => {
+        this[index].value = value
+      })
+    }
   }
 
   constructor(props) {

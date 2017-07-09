@@ -18,18 +18,27 @@ http.createServer(function (req, res) {
   });
   req.on('end', function () {
     console.log('====== got some request ========', req.method, payload)
-    if (req.url === '/login' && req.method === 'POST'){
-      if (!payload) {
-        res.write('login fail')
-        res.end()
-      } else {
-        const obj = JSON.parse(payload)
-        console.log('kendo jaa after', obj)
-        loginHandler(obj, res)
-      }
-    } else {
-      res.write('login fail')
+    if (!payload) {
+      res.write('======= no payload ============')
       res.end()
+    }
+    const obj = JSON.parse(payload)
+    if (req.method === 'POST') {
+      switch (req.url) {
+        case '/login':
+          loginHandler(obj, res)
+          break
+        case '/create-course':
+          console.log('kendo create course')
+          break
+        case '/update-profile':
+          console.log('kendo update profile')
+          break
+        default:
+          res.write('======== unknown endpoint ==========')
+          res.end()
+
+      }
     }
   })
 

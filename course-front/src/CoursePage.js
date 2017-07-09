@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'react-bootstrap'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 class CoursePage extends Component {
   static propTypes = {
@@ -23,11 +24,13 @@ class CoursePage extends Component {
     console.log('kendo', this.props.showCreateButton)
     return (
       <div className='course-page'>
-        {this.props.showCreateButton && <Button
-          style={{ margin: '20px 0', float: 'right' }}
-          >
-            Create Course
-          </Button>
+        {this.props.showCreateButton && (
+            <Link to='/create-course'>
+              <Button style={{ margin: '20px 0', float: 'right' }}>
+                  Create Course
+              </Button>
+            </Link>
+          )
         }
         <Table striped bordered condensed hover>
           <thead>

@@ -13,7 +13,7 @@ class EditProfilePage extends Component {
       <TextForm
         labels={[ 'First name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ]}
         buttonLabel='Update'
-        values={[ user.first_name, user.last_name, user.nickname, user.birthday, user.gender ]}
+        defaultValues={[ user.first_name, user.last_name, user.nickname, user.birthday, user.gender ]}
       />
     );
   }
