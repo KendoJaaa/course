@@ -40,6 +40,7 @@ const loginHandler = (payload, res) => {
   const url = 'mongodb://localhost:27017/course'
   const email = payload.email
   const password = payload.password
+  const accessToken = payload.accessToken
   console.log('kendo jaa payload', email, password)
   MongoClient.connect(url, function(err, db) {
     console.log('Connected to DB')
@@ -48,13 +49,10 @@ const loginHandler = (payload, res) => {
       if (err) throw err
       db.close();
       console.log('kendo jaa result',result)
-      if (result && result.password === password) {
+      if (result && (result.password === password || result.access_token === accessToken)) {
         console.log('======== login success ========')
-        if (result.role === 'teacher') {
-          res.write('login success teacher')
-        } else {
-          res.write('login success student')
-        }
+        const payload = JSON.stringify(result)
+        res.write(payload)
         res.end()
       } else {
         console.log('kendo jaa herherhehrehrehrhehrehrherhehrehrherh')

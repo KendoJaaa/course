@@ -23,13 +23,15 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      login: false,
-      role: ''
+      user: null,
     }
   }
 
   componentDidMount = () => {
-    console.log('kendo did mount again')
+    console.log('kendo did mount again', localStorage)
+    if (localStorage.courseEmail && localStorage.courseAccessToken) {
+      this.onLogin({ email: localStorage.courseEmail, accessToken: localStorage.courseAccessToken })
+    }
   }
 
   onUpdateUser = (user) => {
@@ -40,26 +42,27 @@ class App extends Component {
     this.setState({ courses: [ ...this.state.courses, course ]})
   }
 
-  onLogin = (email, password) => {
+  onLogin = ({ email, password, accessToken }) => {
     const instance = axios.create({
       baseURL: 'http://localhost:8080/',
       timeout: 1000,
       headers: {'content-Type': 'application/json'},
     });
-    instance.post('/login', JSON.stringify({ email ,password }))
+
+    let payload
+    if (password) {
+      payload = { email, password }
+    } else {
+      payload = { email, accessToken }
+    }
+    instance.post('/login', JSON.stringify(payload))
       .then((response) => {
-        if (response.data === 'login success teacher') {
-          console.log('===== login success teacher ======')
-          this.setState({
-            login: true,
-            role: 'teacher'
-          })
-        } else if (response.data === 'login success student') {
-          console.log('===== login success student ======')
-          this.setState({
-            login: true,
-            role: 'student'
-          })
+        if (response.data !== 'login fail') {
+          console.log('===== login successfully ======')
+          const user = response.data
+          this.setState({ user })
+          localStorage.setItem('courseEmail', user.email )
+          localStorage.setItem('courseAccessToken', user.access_token)
         } else {
           console.log('===== login failed ======')
         }
@@ -77,12 +80,12 @@ class App extends Component {
           <Header />
           <Route
             path='/login'
-            render={(props) => <LoginPage onLogin={this.onLogin} login={this.state.login} {...props} />}
+            render={(props) => <LoginPage onLogin={this.onLogin} login={!!this.state.user} {...props} />}
           />
-          <PrivateRoute path='/' exact render={() => (<CoursePage courses={courses} />)} login={this.state.login} />
-          <PrivateRoute path='/course' render={() => (<CoursePage courses={courses} />)} login={this.state.login} />
-          <PrivateRoute path='/edit-profile' component={EditProfilePage} login={this.state.login} />
-          <PrivateRoute path='/create-course' component={CreateCoursePage} login={this.state.login} />
+          <PrivateRoute path='/' exact render={() => (<CoursePage courses={courses} />)} login={!!this.state.user} />
+          <PrivateRoute path='/course' render={() => (<CoursePage courses={courses} />)} login={!!this.state.user} />
+          <PrivateRoute path='/edit-profile' component={EditProfilePage} login={!!this.state.user} />
+          <PrivateRoute path='/create-course' component={CreateCoursePage} login={!!this.state.user} />
         </div>
       </Router>
     );

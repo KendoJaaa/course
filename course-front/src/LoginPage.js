@@ -71,7 +71,7 @@ class LoginPage extends Component {
             </FormGroup>
             <div style={{ 'display':'flex', 'justifyContent':'center' }}>
               <Button
-                onClick={() => this.props.onLogin(this.email.value, this.password.value)}
+                onClick={() => this.props.onLogin({ email: this.email.value, password: this.password.value })}
               >
                 Log in
               </Button>
