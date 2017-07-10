@@ -1,8 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Navbar, Nav, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 class Header extends Component {
+  static propTypes = {
+    login: PropTypes.bool.isRequired,
+    onLogOut: PropTypes.func.isRequired,
+  }
+
   render() {
     return (
       <Navbar inverse collapseOnSelect>
@@ -23,11 +29,13 @@ class Header extends Component {
               Edit Profile
             </Nav>
           </Link>
-          <Button onClick={this.props.onLogOut}>
-            <Nav pullRight>
-              Logout
-            </Nav>
-          </Button>
+          { this.props.login && (
+            <Button onClick={this.props.onLogOut}>
+              <Nav pullRight>
+                Logout
+              </Nav>
+            </Button>
+          )}
         </Navbar.Collapse>
       </Navbar>
     )

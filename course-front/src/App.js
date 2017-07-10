@@ -83,24 +83,28 @@ class App extends Component {
     const renderCoursePage = () => (<CoursePage
         courses={this.state.courses} showCreateButton={this.state.user && this.state.user.role === 'teacher'} />
     )
+    const login = !!this.state.user
     return (
       <Router>
         <div>
-          <Header onLogOut={this.onLogOut} />
+          <Header
+            onLogOut={this.onLogOut}
+            login={login}
+          />
           <Route
             path='/login'
             render={(props) => <LoginPage
               onLogin={this.onLogin}
-              login={!!this.state.user}
+              login={login}
               {...props}
             />}
           />
-          <PrivateRoute path='/' exact render={renderCoursePage} login={!!this.state.user} />
-          <PrivateRoute path='/courses' render={renderCoursePage} login={!!this.state.user} />
+          <PrivateRoute path='/' exact render={renderCoursePage} login={login} />
+          <PrivateRoute path='/courses' render={renderCoursePage} login={login} />
           <PrivateRoute path='/edit-profile' render={() =>
-            (<EditProfilePage user={this.state.user} onUpdateUser={this.onUpdateUser} />)} login={!!this.state.user} />
+            (<EditProfilePage user={this.state.user} onUpdateUser={this.onUpdateUser} />)} login={login} />
           <PrivateRoute path='/create-course' render={() =>
-            (<CreateCoursePage onCreateCourse={this.onCreateCourse} />)} login={!!this.state.user} />
+            (<CreateCoursePage onCreateCourse={this.onCreateCourse} />)} login={login} />
         </div>
       </Router>
     )
