@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button, DropdownButton, MenuItem,
+import _ from 'lodash'
+import { Table, Button, DropdownButton, MenuItem, Panel,
   Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -9,6 +10,22 @@ class CoursePage extends Component {
   static propTypes = {
     showCreateButton: PropTypes.bool,
     courses: PropTypes.array
+  }
+
+  constructor () {
+    super()
+    this.state = {
+      searchName: '',
+      searchTime: '',
+    }
+  }
+
+  onSelectSearchTime = (time) => {
+    this.setState({ searchTime: time })
+  }
+
+  onSearchChange = (e) => {
+    this.setState({ searchName: e.target.value })
   }
 
   renderCourse = (course, key) => {
@@ -23,31 +40,36 @@ class CoursePage extends Component {
   }
 
   render() {
+    const filteredCourse = _.filter(this.props.courses, (course) => {
+      return _.includes(course.name, this.state.searchName) && ( course.time === this.state.searchTime || this.state.searchTime === '' )
+    })
+
     return (
       <div className='course-page' style={{ margin: '20px 150px' }}>
         <div
           className='course-page-header'
-          style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}
+          style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}
         >
-          <Form inline>
-            <FormGroup>
-              <ControlLabel>Name</ControlLabel>
-              {' '}
-              <FormControl type='text' />
-            </FormGroup>
-            {' '}
-            <FormGroup>
-              <ControlLabel>Time</ControlLabel>
-              {' '}
-              <DropdownButton title='Select Time' id='time-dropdown'>
-                {courseTimes.map((time) => <MenuItem key={time} eventKey={time}>{time}</MenuItem>)}
-              </DropdownButton>
-            </FormGroup>
-            {' '}
-            <Button>
-              Search
-            </Button>
-          </Form>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <h5><b>Search:</b></h5>{' '}
+            <div style={{ border: '1px solid #ddd', padding: '5px', borderRadius: '5px' }}>
+              <Form inline>
+                <FormGroup>
+                  <ControlLabel>Name</ControlLabel>
+                  {' '}
+                  <input type='text' className='form-control' onChange={this.onSearchChange} />
+                </FormGroup>
+                {' '}
+                <FormGroup>
+                  <ControlLabel>Time</ControlLabel>
+                  {' '}
+                  <DropdownButton title='Select Time' id='time-dropdown' onSelect={this.onSelectSearchTime}>
+                    {courseTimes.map((time) => <MenuItem key={time} eventKey={time}>{time}</MenuItem>)}
+                  </DropdownButton>
+                </FormGroup>
+              </Form>
+            </div>
+          </div>
           {this.props.showCreateButton && (
               <Link to='/create-course'>
                 <Button>
@@ -69,7 +91,7 @@ class CoursePage extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.courses.map((course, key) => this.renderCourse(course, key))}
+            {filteredCourse.map((course, key) => this.renderCourse(course, key))}
           </tbody>
         </Table>
       </div>
