@@ -46,7 +46,7 @@ class TextForm extends Component {
           {this.props.labels.map((label, index) => this.renderFormRow(label, index))}
         </Form>
         <div style={{ 'display':'flex', 'justifyContent':'center' }}>
-          <Button onClick={this.props.onSubmit} type="submit">
+          <Button onClick={() => this.props.onSubmit(this)} type="submit">
             {this.props.buttonLabel}
           </Button>
         </div>

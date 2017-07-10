@@ -1,7 +1,7 @@
 
 var http = require('http')
 var MongoClient = require('mongodb').MongoClient
-
+var ObjectID = require('mongodb').ObjectID
 
 console.log('Start the Server at Port 8080')
 //create a server object:
@@ -23,7 +23,10 @@ http.createServer(function (req, res) {
       res.end()
     }
     const obj = JSON.parse(payload)
+    console.log('kendo hereherehre edidiididi')
     if (req.method === 'POST') {
+      console.log('kendo hereherehre dogodgodgodgodo', req.url)
+
       switch (req.url) {
         case '/login':
           loginHandler(obj, res)
@@ -33,19 +36,47 @@ http.createServer(function (req, res) {
           break
         case '/update-profile':
           console.log('kendo update profile')
+          editProfile(obj, res)
           break
         default:
           res.write('======== unknown endpoint ==========')
           res.end()
 
       }
+    } else {
+      res.write('======== not post endpoint ==========')
+      res.end()
     }
   })
 
 }).listen(8080)
 
-const loginHandler = (payload, res) => {
 
+const editProfile = (payload, res) => {
+  const url = 'mongodb://localhost:27017/course'
+  console.log('kendo jaa herehrerh', payload)
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err
+    const userId = payload._id
+    delete payload._id
+    console.log('kendo payload',payload)
+    db.collection('users').updateOne({ _id: ObjectID(userId) }, payload, (err, DBres) => {
+      if (err) throw err
+      console.log('1 record updated', DBres)
+
+      db.collection('users').findOne({ _id: ObjectID(userId) }, (err, DBres2) => {
+        console.log('kendo jaa', DBres2)
+
+        db.close()
+        res.write('====== finish update profile =======')
+        res.end()
+      })
+    })
+
+  })
+}
+
+const loginHandler = (payload, res) => {
   const url = 'mongodb://localhost:27017/course'
   const email = payload.email
   const password = payload.password
