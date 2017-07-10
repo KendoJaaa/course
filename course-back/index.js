@@ -3,6 +3,7 @@ const http = require('http')
 
 const loginHandler = require('./loginHandler.js')
 const updateProfile = require('./updateProfile.js')
+const createCourse = require('./createCourse.js')
 
 console.log('Start the Server at Port 8080')
 //create a server object:
@@ -30,6 +31,7 @@ http.createServer(function (req, res) {
           loginHandler(obj, res)
           break
         case '/create-course':
+          createCourse(obj, res)
           break
         case '/update-profile':
           updateProfile(obj, res)

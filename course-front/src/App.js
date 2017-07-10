@@ -38,7 +38,7 @@ class App extends Component {
     this.setState({ user })
   }
 
-  onOnAddCourse = (course) => {
+  onCreateCourse = (course) => {
     this.setState({ courses: [ ...this.state.courses, course ]})
   }
 
@@ -99,7 +99,8 @@ class App extends Component {
           <PrivateRoute path='/course' render={renderCoursePage} login={!!this.state.user} />
           <PrivateRoute path='/edit-profile' render={() =>
             (<EditProfilePage user={this.state.user} onUpdateUser={this.onUpdateUser} />)} login={!!this.state.user} />
-          <PrivateRoute path='/create-course' component={CreateCoursePage} login={!!this.state.user} />
+          <PrivateRoute path='/create-course' render={() =>
+            (<CreateCoursePage onCreateCourse={this.onCreateCourse} />)} login={!!this.state.user} />
         </div>
       </Router>
     )

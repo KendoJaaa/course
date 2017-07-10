@@ -13,13 +13,9 @@ const updateProfile = (payload, res) => {
     db.collection('users').updateOne({ _id: ObjectID(userId) }, payload, (err, DBres) => {
       if (err) throw err
       console.log('1 record updated', DBres)
-
-      db.collection('users').findOne({ _id: ObjectID(userId) }, (err, DBres2) => {
-
-        db.close()
-        res.write('====== finish update profile =======')
-        res.end()
-      })
+      db.close()
+      res.write('====== finish update profile =======')
+      res.end()
     })
 
   })
