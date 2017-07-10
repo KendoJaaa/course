@@ -96,7 +96,7 @@ class App extends Component {
             />}
           />
           <PrivateRoute path='/' exact render={renderCoursePage} login={!!this.state.user} />
-          <PrivateRoute path='/course' render={renderCoursePage} login={!!this.state.user} />
+          <PrivateRoute path='/courses' render={renderCoursePage} login={!!this.state.user} />
           <PrivateRoute path='/edit-profile' render={() =>
             (<EditProfilePage user={this.state.user} onUpdateUser={this.onUpdateUser} />)} login={!!this.state.user} />
           <PrivateRoute path='/create-course' render={() =>

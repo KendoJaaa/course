@@ -14,7 +14,7 @@ class Header extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Link to='/course'>
+          <Link to='/courses'>
             <Nav>
               Course
             </Nav>

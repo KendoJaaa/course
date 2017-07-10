@@ -10,7 +10,7 @@ class CoursePage extends Component {
   }
 
   renderCourse = (course) => {
-    return  <tr key={course.name}>
+    return  <tr key={course._id}>
       <td>{course.name}</td>
       <td>{course.description}</td>
       <td>{course.category}</td>
