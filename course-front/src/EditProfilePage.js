@@ -5,19 +5,19 @@ import axios from 'axios'
 
 class EditProfilePage extends Component {
   static propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    onUpdateUser: PropTypes.func.isRequired
   }
 
   onUpdateProfile = (data) => {
     const updatedUser = {
+      ...this.props.user,
       first_name: data[0].value,
       last_name: data[1].value,
       nickname: data[2].value,
       birthday: data[3].value,
-      gender: data[4].value,
-      ...this.props.user
+      gender: data[4].value
     }
-
     const instance = axios.create({
       baseURL: 'http://localhost:8080/',
       timeout: 1000,
@@ -26,9 +26,10 @@ class EditProfilePage extends Component {
     instance.post('/update-profile', JSON.stringify(updatedUser))
       .then((response) => {
         console.log('========= update profile successfully ===========')
+        this.props.onUpdateUser(updatedUser)
       })
       .catch(function (error) {
-        console.log(error)
+        console.error(error)
       })
   }
 

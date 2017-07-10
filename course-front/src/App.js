@@ -29,7 +29,6 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    console.log('kendo did mount again', localStorage)
     if (localStorage.courseEmail && localStorage.courseAccessToken) {
       this.onLogin({ email: localStorage.courseEmail, accessToken: localStorage.courseAccessToken })
     }
@@ -76,7 +75,7 @@ class App extends Component {
         }
       })
       .catch(function (error) {
-        console.log(error)
+        console.error(error)
       })
   }
 
@@ -99,7 +98,7 @@ class App extends Component {
           <PrivateRoute path='/' exact render={renderCoursePage} login={!!this.state.user} />
           <PrivateRoute path='/course' render={renderCoursePage} login={!!this.state.user} />
           <PrivateRoute path='/edit-profile' render={() =>
-            (<EditProfilePage user={this.state.user} />)} login={!!this.state.user} />
+            (<EditProfilePage user={this.state.user} onUpdateUser={this.onUpdateUser} />)} login={!!this.state.user} />
           <PrivateRoute path='/create-course' component={CreateCoursePage} login={!!this.state.user} />
         </div>
       </Router>
