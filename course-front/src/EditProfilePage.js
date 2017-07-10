@@ -11,14 +11,22 @@ class EditProfilePage extends Component {
     onUpdateUser: PropTypes.func.isRequired
   }
 
-  onUpdateProfile = (data) => {
+  componentDidMount = () => {
+    this['First Name'].value = this.props.user.first_name
+    this['Last Name'].value = this.props.user.last_name
+    this['Nickname'].value = this.props.user.nickname
+    this['Birthday'].value = this.props.user.birthday
+    this['Gender'].value = this.props.user.gender
+  }
+
+  onUpdateProfile = () => {
     const updatedUser = {
       ...this.props.user,
-      first_name: data[0].value,
-      last_name: data[1].value,
-      nickname: data[2].value,
-      birthday: data[3].value,
-      gender: data[4].value
+      first_name: this['First Name'].value,
+      last_name: this['Last Name'].value,
+      nickname: this['Nickname'].value,
+      birthday: this['Birthday'].value,
+      gender: this['Gender'].value
     }
     const instance = axios.create({
       baseURL: 'http://localhost:8080/',
@@ -41,7 +49,7 @@ class EditProfilePage extends Component {
         {label}
       </Col>
       <Col sm={10}>
-        <FormControl inputRef={ref => { this.name = ref }}/>
+        <FormControl inputRef={ref => { this[label] = ref }}/>
       </Col>
     </FormGroup>
   }
@@ -54,10 +62,10 @@ class EditProfilePage extends Component {
           style={{ width: '600px', margin: 'auto' }}
         >
           <Form horizontal>
-            {[ 'First name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ].map((label)=> this.renderRow(label))}
+            {[ 'First Name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ].map((label)=> this.renderRow(label))}
           </Form>
           <div style={{ 'display':'flex', 'justifyContent':'center' }}>
-            <Button onClick={() => this.onCreateCourse} type="submit">
+            <Button onClick={this.onUpdateProfile} type="submit">
               Update
             </Button>
           </div>

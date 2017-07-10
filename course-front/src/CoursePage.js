@@ -11,8 +11,8 @@ class CoursePage extends Component {
     courses: PropTypes.array
   }
 
-  renderCourse = (course) => {
-    return  <tr key={course._id}>
+  renderCourse = (course, key) => {
+    return  <tr key={key}>
       <td>{course.name}</td>
       <td>{course.description}</td>
       <td>{course.category}</td>
@@ -69,7 +69,7 @@ class CoursePage extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.courses.map((course) => this.renderCourse(course))}
+            {this.props.courses.map((course, key) => this.renderCourse(course, key))}
           </tbody>
         </Table>
       </div>

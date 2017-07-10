@@ -121,7 +121,7 @@ class CreateCoursePage extends Component {
             </FormGroup>
           </Form>
           <div style={{ 'display':'flex', 'justifyContent':'center' }}>
-            <Button onClick={() => this.onCreateCourse} type="submit">
+            <Button onClick={this.onCreateCourse} type="submit">
               Create
             </Button>
           </div>
