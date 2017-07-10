@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
@@ -23,15 +23,37 @@ class CoursePage extends Component {
   render() {
     console.log('kendo', this.props.showCreateButton)
     return (
-      <div className='course-page'>
-        {this.props.showCreateButton && (
-            <Link to='/create-course'>
-              <Button style={{ margin: '20px 0', float: 'right' }}>
-                  Create Course
-              </Button>
-            </Link>
-          )
-        }
+      <div className='course-page' style={{ margin: '20px 150px' }}>
+        <div
+          className='course-page-header'
+          style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}
+        >
+          <Form inline>
+            <FormGroup>
+              <ControlLabel>Name</ControlLabel>
+              {' '}
+              <FormControl type='text' />
+            </FormGroup>
+            {' '}
+            <FormGroup>
+              <ControlLabel>Time</ControlLabel>
+              {' '}
+              <FormControl type='text' />
+            </FormGroup>
+            {' '}
+            <Button>
+              Search
+            </Button>
+          </Form>
+          {this.props.showCreateButton && (
+              <Link to='/create-course'>
+                <Button>
+                    Create Course
+                </Button>
+              </Link>
+            )
+          }
+        </div>
         <Table striped bordered condensed hover>
           <thead>
             <tr>
