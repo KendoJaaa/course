@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button, Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { Table, Button, DropdownButton, MenuItem,
+  Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
@@ -38,7 +39,12 @@ class CoursePage extends Component {
             <FormGroup>
               <ControlLabel>Time</ControlLabel>
               {' '}
-              <FormControl type='text' />
+              <DropdownButton title='Select Time'>
+                <MenuItem eventKey='1'>9.00 - 10.00</MenuItem>
+                <MenuItem eventKey='2'>10.00 - 11.00</MenuItem>
+                <MenuItem eventKey='3'>13.00 - 14.00</MenuItem>
+                <MenuItem eventKey='4'>14.00 - 15.00</MenuItem>
+              </DropdownButton>
             </FormGroup>
             {' '}
             <Button>
