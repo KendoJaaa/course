@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
-import TextForm from './TextForm.js'
 import axios from 'axios'
+
+import { Button, Form, FormGroup, Col, FormControl, ControlLabel,
+  DropdownButton, MenuItem } from 'react-bootstrap'
 
 class EditProfilePage extends Component {
   static propTypes = {
@@ -33,15 +35,33 @@ class EditProfilePage extends Component {
       })
   }
 
+  renderRow = (label) => {
+    return <FormGroup controlId="formHorizontalEmail" >
+      <Col componentClass={ControlLabel} sm={2}>
+        {label}
+      </Col>
+      <Col sm={10}>
+        <FormControl inputRef={ref => { this.name = ref }}/>
+      </Col>
+    </FormGroup>
+  }
+
   render() {
     const user = this.props.user
     return (
-      <TextForm
-        labels={[ 'First name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ]}
-        buttonLabel='Update'
-        defaultValues={[ user.first_name, user.last_name, user.nickname, user.birthday, user.gender ]}
-        onSubmit={this.onUpdateProfile}
-      />
+      <div
+          className='edit-profile-page'
+          style={{ width: '600px', margin: 'auto' }}
+        >
+          <Form horizontal>
+            {[ 'First name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ].map((label)=> this.renderRow(label))}
+          </Form>
+          <div style={{ 'display':'flex', 'justifyContent':'center' }}>
+            <Button onClick={() => this.onCreateCourse} type="submit">
+              Update
+            </Button>
+          </div>
+        </div>
     );
   }
 }

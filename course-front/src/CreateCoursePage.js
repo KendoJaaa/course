@@ -85,7 +85,7 @@ class CreateCoursePage extends Component {
                   id='category'
                   onSelect={this.onDropdownSelect('category')}
                 >
-                  {courseCategories.map((cat) => <MenuItem eventKey={cat}>{cat}</MenuItem>)}
+                  {courseCategories.map((cat) => <MenuItem key={cat} eventKey={cat}>{cat}</MenuItem>)}
                 </DropdownButton>
               </Col>
             </FormGroup>
@@ -107,7 +107,7 @@ class CreateCoursePage extends Component {
                   id='time'
                   onSelect={this.onDropdownSelect('time')}
                 >
-                  {courseTimes.map((time) => <MenuItem eventKey={time}>{time}</MenuItem>)}
+                  {courseTimes.map((time) => <MenuItem key={time} eventKey={time}>{time}</MenuItem>)}
                 </DropdownButton>
               </Col>
             </FormGroup>

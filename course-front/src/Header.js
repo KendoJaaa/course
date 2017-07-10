@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavItem, Nav, Button } from 'react-bootstrap'
-import PropTypes from 'prop-types'
+import { Navbar, Nav, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 class Header extends Component {
