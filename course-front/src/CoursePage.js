@@ -3,6 +3,7 @@ import { Table, Button, DropdownButton, MenuItem,
   Form, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { courseTimes } from './courseData.js'
 
 class CoursePage extends Component {
   static propTypes = {
@@ -22,7 +23,6 @@ class CoursePage extends Component {
   }
 
   render() {
-    console.log('kendo', this.props.showCreateButton)
     return (
       <div className='course-page' style={{ margin: '20px 150px' }}>
         <div
@@ -39,11 +39,8 @@ class CoursePage extends Component {
             <FormGroup>
               <ControlLabel>Time</ControlLabel>
               {' '}
-              <DropdownButton title='Select Time'>
-                <MenuItem eventKey='1'>9.00 - 10.00</MenuItem>
-                <MenuItem eventKey='2'>10.00 - 11.00</MenuItem>
-                <MenuItem eventKey='3'>13.00 - 14.00</MenuItem>
-                <MenuItem eventKey='4'>14.00 - 15.00</MenuItem>
+              <DropdownButton title='Select Time' id='time-dropdown'>
+                {courseTimes.map((time) => <MenuItem eventKey={time}>{time}</MenuItem>)}
               </DropdownButton>
             </FormGroup>
             {' '}

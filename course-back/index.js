@@ -19,31 +19,31 @@ http.createServer(function (req, res) {
       payload += data
   });
   req.on('end', function () {
-    console.log('====== got some request ========', req.method, payload)
     if (!payload) {
+      console.log('========= no payload ===========')
       res.write('======= no payload ============')
       res.end()
-    }
-    const obj = JSON.parse(payload)
-    if (req.method === 'POST') {
-      switch (req.url) {
-        case '/login':
-          loginHandler(obj, res)
-          break
-        case '/create-course':
-          createCourse(obj, res)
-          break
-        case '/update-profile':
-          updateProfile(obj, res)
-          break
-        default:
-          res.write('======== unknown endpoint ==========')
-          res.end()
-
-      }
     } else {
-      res.write('======== not post endpoint ==========')
-      res.end()
+      const obj = JSON.parse(payload)
+      if (req.method === 'POST') {
+        switch (req.url) {
+          case '/login':
+            loginHandler(obj, res)
+            break
+          case '/create-course':
+            createCourse(obj, res)
+            break
+          case '/update-profile':
+            updateProfile(obj, res)
+            break
+          default:
+            res.write('======== unknown endpoint ==========')
+            res.end()
+        }
+      } else {
+        res.write('======== not post endpoint ==========')
+        res.end()
+      }
     }
   })
 
