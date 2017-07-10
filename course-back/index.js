@@ -1,8 +1,8 @@
 
-import http from 'http'
+const http = require('http')
 
-import loginHandler from './loginHandler.js'
-import updateProfile from './updateProfile.js'
+const loginHandler = require('./loginHandler.js')
+const updateProfile = require('./updateProfile.js')
 
 console.log('Start the Server at Port 8080')
 //create a server object:

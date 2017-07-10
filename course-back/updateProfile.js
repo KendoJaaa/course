@@ -1,5 +1,5 @@
 
-import mongoDB from 'mongodb'
+const mongoDB = require('mongodb')
 
 const MongoClient = mongoDB.MongoClient
 const ObjectID = mongoDB.ObjectID
@@ -25,4 +25,4 @@ const updateProfile = (payload, res) => {
   })
 }
 
-export default updateProfile
+module.exports = updateProfile

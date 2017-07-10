@@ -1,6 +1,5 @@
 
-
-import mongoDB from 'mongodb'
+const mongoDB = require('mongodb')
 
 const MongoClient = mongoDB.MongoClient
 
@@ -37,4 +36,4 @@ const loginHandler = (payload, res) => {
   })
 }
 
-export default loginHandler
+module.exports = loginHandler
