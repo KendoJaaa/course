@@ -44,7 +44,7 @@ class EditProfilePage extends Component {
   }
 
   renderRow = (label) => {
-    return <FormGroup controlId="formHorizontalEmail" >
+    return <FormGroup key={label} controlId="formHorizontalEmail" >
       <Col componentClass={ControlLabel} sm={2}>
         {label}
       </Col>
@@ -70,8 +70,8 @@ class EditProfilePage extends Component {
             </Button>
           </div>
         </div>
-    );
+    )
   }
 }
 
-export default EditProfilePage;
+export default EditProfilePage
