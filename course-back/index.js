@@ -1,5 +1,6 @@
 
 const http = require('http')
+const fs = require('fs')
 
 const loginHandler = require('./loginHandler.js')
 const updateProfile = require('./updateProfile.js')
@@ -14,18 +15,19 @@ http.createServer(function (req, res) {
   , 'Access-Control-Allow-Origin': '*'
   , 'Access-Control-Max-Age': '86400'})
 
-  let payload = ''
-  req.on('data', function (data) {
-      payload += data
-  });
-  req.on('end', function () {
-    if (!payload) {
-      console.log('========= no payload ===========')
-      res.write('======= no payload ============')
+  if (req.method === 'GET') {
+    fs.readFile('../course-front/build/index.html', function(err, data) {
+      res.write(data)
       res.end()
-    } else {
-      const obj = JSON.parse(payload)
-      if (req.method === 'POST') {
+    })
+  } else if (req.method === 'POST') {
+    let payload = ''
+    req.on('data', function (data) {
+        payload += data
+    })
+    req.on('end', function () {
+      if (payload) {
+        const obj = JSON.parse(payload)
         switch (req.url) {
           case '/login':
             loginHandler(obj, res)
@@ -37,14 +39,20 @@ http.createServer(function (req, res) {
             updateProfile(obj, res)
             break
           default:
+            console.log('========= unknown endpoint ===========')
             res.write('======== unknown endpoint ==========')
             res.end()
         }
       } else {
-        res.write('======== not post endpoint ==========')
+        console.log('========= no payload ===========')
+        res.write('======= no payload ============')
         res.end()
       }
-    }
-  })
+    })
+  } else {
+    console.log('========= other request ===========')
+    res.write('======= other request ============')
+    res.end()
+  }
 
 }).listen(8080)
