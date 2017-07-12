@@ -16,10 +16,18 @@ http.createServer(function (req, res) {
   , 'Access-Control-Max-Age': '86400'})
 
   if (req.method === 'GET') {
-    fs.readFile('../course-front/build/index.html', function(err, data) {
-      res.write(data)
-      res.end()
-    })
+    console.log(req)
+    if (req.url.indexOf('.') !== -1) {
+      fs.readFile('../course-front/build' + req.url, { encoding: 'utf8' }, function(err, data) {
+        res.write(data)
+        res.end()
+      })
+    } else {
+      fs.readFile('../course-front/build/index.html', { encoding: 'utf8' }, function(err, data) {
+        res.write(data)
+        res.end()
+      })
+    }
   } else if (req.method === 'POST') {
     let payload = ''
     req.on('data', function (data) {

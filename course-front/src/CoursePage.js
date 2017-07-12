@@ -63,7 +63,7 @@ class CoursePage extends Component {
                 <FormGroup>
                   <ControlLabel>Time</ControlLabel>
                   {' '}
-                  <DropdownButton title='Select Time' id='time-dropdown' onSelect={this.onSelectSearchTime}>
+                  <DropdownButton title={this.state.searchTime || 'Select Time'} id='time-dropdown' onSelect={this.onSelectSearchTime}>
                     {courseTimes.map((time) => <MenuItem key={time} eventKey={time}>{time}</MenuItem>)}
                   </DropdownButton>
                 </FormGroup>
