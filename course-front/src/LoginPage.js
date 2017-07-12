@@ -1,6 +1,4 @@
 
-import './LoginPage.css'
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { Button, Form, FormGroup,
@@ -40,9 +38,11 @@ class LoginPage extends Component {
     }
 
     return (
-      <div className='login-page'>
+      <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-100%)' }}>
         <h1>ABC School</h1>
-        <div className='login-form'>
+        <div style={{ width: '440px', backgroundColor: 'white', padding: '20px',
+          border: '1px solid #dddddd', 'borderRadius': '10px' }}
+        >
           <Form horizontal>
             <FormGroup controlId="formHorizontalEmail">
               <Col componentClass={ControlLabel} sm={2}>
