@@ -26,6 +26,12 @@ class LoginPage extends Component {
     }
   }
 
+  onKeyDown = (e) => {
+    if (e.which === 13) {
+      this.props.onLogin({ email: this.email.value, password: this.password.value })
+    }
+  }
+
   render () {
 
     const { from } = this.props.location.state || { from: { pathname: '/' } }
@@ -66,6 +72,7 @@ class LoginPage extends Component {
                   inputRef={ref => { this.password = ref }}
                   type="password"
                   placeholder="Password"
+                  onKeyDown={this.onKeyDown}
                 />
               </Col>
             </FormGroup>
