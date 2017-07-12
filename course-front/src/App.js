@@ -23,6 +23,7 @@ class App extends Component {
     this.state = {
       user: null,
       courses: [],
+      error: false,
     }
   }
 
@@ -70,9 +71,11 @@ class App extends Component {
           localStorage.setItem('courseAccessToken', user.access_token)
         } else {
           console.log('===== login failed ======')
+          if (!accessToken) { this.setState({ error: true }) }
         }
       })
       .catch(function (error) {
+        if (!accessToken) { this.setState({ error: true }) }
         console.error(error)
       })
   }
@@ -94,6 +97,7 @@ class App extends Component {
             render={(props) => <LoginPage
               onLogin={this.onLogin}
               login={login}
+              error={this.state.error}
               {...props}
             />}
           />

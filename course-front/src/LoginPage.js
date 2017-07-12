@@ -10,7 +10,8 @@ class LoginPage extends Component {
 
   static propTypes = {
     onLogin: PropTypes.func.isRequired,
-    login: PropTypes.bool.isRequired
+    login: PropTypes.bool.isRequired,
+    error: PropTypes.bool.isRequired,
   }
 
   constructor (props) {
@@ -82,6 +83,12 @@ class LoginPage extends Component {
               >
                 Log in
               </Button>
+              { this.props.error  && (
+                  <div style={{ position: 'absolute', right: '10px', bottom: '27px', color: '#a94442' }}>
+                    email or password is wrong
+                  </div>
+                )
+              }
             </div>
           </Form>
         </div>
