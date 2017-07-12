@@ -16,7 +16,6 @@ const loginHandler = (payload, res) => {
 
       db.collection('courses').find({}).toArray(function(err, courseResult) {
         if (err) throw err
-        console.log('kendo jaa', courseResult)
         db.close()
         if (userResult && (userResult.password === password || userResult.access_token === accessToken)) {
           console.log('======== login success ========')
