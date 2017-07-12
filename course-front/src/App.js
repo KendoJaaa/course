@@ -42,6 +42,7 @@ class App extends Component {
   }
 
   onLogOut = () => {
+    window.location.href = '/'
     this.setState({ user: null, courses: [ ] })
     localStorage.setItem('courseEmail', undefined)
     localStorage.setItem('courseAccessToken', undefined)
