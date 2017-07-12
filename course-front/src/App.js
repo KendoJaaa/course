@@ -84,13 +84,16 @@ class App extends Component {
     const renderCoursePage = () => (<CoursePage
         courses={this.state.courses} showCreateButton={this.state.user && this.state.user.role === 'teacher'} />
     )
-    const login = !!this.state.user
+    const user = this.state.user
+    const login = !!user
+    const name = user && user.first_name + ' ' + user.last_name
     return (
       <Router>
         <div>
           <Header
             onLogOut={this.onLogOut}
             login={login}
+            name={name}
           />
           <Route
             path='/login'
