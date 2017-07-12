@@ -11,12 +11,23 @@ class EditProfilePage extends Component {
     onUpdateUser: PropTypes.func.isRequired
   }
 
+  constructor () {
+    super()
+    this.state = {
+      updated: false
+    }
+  }
+
   componentDidMount = () => {
     this['First Name'].value = this.props.user.first_name
     this['Last Name'].value = this.props.user.last_name
     this['Nickname'].value = this.props.user.nickname
     this['Birthday'].value = this.props.user.birthday
     this['Gender'].value = this.props.user.gender
+  }
+
+  onKeyDown = () => {
+    this.setState({ updated: false })
   }
 
   onUpdateProfile = () => {
@@ -36,6 +47,7 @@ class EditProfilePage extends Component {
     instance.post('/update-profile', JSON.stringify(updatedUser))
       .then((response) => {
         console.log('========= update profile successfully ===========')
+        this.setState({ updated: true })
         this.props.onUpdateUser(updatedUser)
       })
       .catch(function (error) {
@@ -49,7 +61,7 @@ class EditProfilePage extends Component {
         {label}
       </Col>
       <Col sm={10}>
-        <FormControl inputRef={ref => { this[label] = ref }}/>
+        <FormControl onKeyDown={this.onKeyDown} inputRef={ref => { this[label] = ref }}/>
       </Col>
     </FormGroup>
   }
@@ -64,10 +76,17 @@ class EditProfilePage extends Component {
           <Form horizontal>
             {[ 'First Name', 'Last Name', 'Nickname', 'Birthday', 'Gender' ].map((label)=> this.renderRow(label))}
           </Form>
-          <div style={{ 'display':'flex', 'justifyContent':'center' }}>
-            <Button onClick={this.onUpdateProfile} type="submit">
+          <div style={{ display:'flex', justifyContent:'center', position: 'relative' }}>
+            <Button onClick={this.onUpdateProfile}>
               Update
             </Button>
+            { this.state.updated
+              && (
+                <div style={{ position: 'absolute', right: '180px', top: '8px', color: '#5cb85c' }}>
+                  updated!
+                </div>
+              )
+            }
           </div>
         </div>
     )
